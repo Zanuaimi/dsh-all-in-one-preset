@@ -22,5 +22,5 @@ dsh plugin --profile web add ./dsh-all-in-one-preset-0.1.0.tgz
 ## npm release
 
 - Push to `main` with `chore:` or `chore(scope):` commit. GitHub Actions runs test, build, and semantic-release.
-- Add repository secret `NPM_TOKEN` with publish permission. `GITHUB_TOKEN` is provided by Actions.
+- Add repository secret `NPM_TOKEN` with publish permission. Existing `NODE_AUTH_TOKEN` also works as fallback. `GITHUB_TOKEN` is provided by Actions.
 - `chore` commits create patch releases; `feat` and `fix` remain available when included in the semantic-release commit range.

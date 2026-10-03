@@ -7,6 +7,11 @@ on:
 permissions:
   contents: read
 
+env:
+  # Support either secret name; NPM_TOKEN is canonical.
+  NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN || secrets.NODE_AUTH_TOKEN }}
+  NPM_TOKEN: ${{ secrets.NPM_TOKEN || secrets.NODE_AUTH_TOKEN }}
+
 jobs:
   release:
     if: startsWith(github.event.head_commit.message, 'chore:') || startsWith(github.event.head_commit.message, 'chore(')
@@ -15,7 +20,6 @@ jobs:
       contents: write
       issues: write
       pull-requests: write
-      id-token: write
     steps:
       - name: Checkout history
         uses: actions/checkout@v4
@@ -42,4 +46,4 @@ jobs:
         run: npx semantic-release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN || secrets.NODE_AUTH_TOKEN }}
